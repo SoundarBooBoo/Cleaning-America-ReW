@@ -20,7 +20,7 @@ public class TruckController : MonoBehaviour
     GameObject boundingBox;
 
     [SerializeField]
-    GameObject effectObject;
+    EffectObject effectObject;
 
     [SerializeField]
     Transform effectCloneParent;
@@ -33,6 +33,10 @@ public class TruckController : MonoBehaviour
 
 
     private Bounds bounds;
+    private EffectObject[] effectObjects;
+
+
+    
 
     private void Start()
     {
@@ -40,28 +44,48 @@ public class TruckController : MonoBehaviour
         canProcessInput = true;
         bounds = boundingBox.GetComponent<BoxCollider>().bounds;
 
-        
+        //IntializePool();
 
     }
 
     void IntializePool()
     {
+        effectObjects = new EffectObject[10];
         for (int i = 0; i < 10; i++)
         {
             Vector3 rPos = new Vector3(Random.Range(bounds.min.x, bounds.max.x), Random.Range(bounds.min.y, bounds.max.y), Random.Range(bounds.min.z, bounds.max.z));
-            Instantiate(effectObject, rPos, Quaternion.identity, effectCloneParent.transform);
+            
+            effectObjects[i] = Instantiate(effectObject, rPos, Quaternion.identity);
+            effectObjects[i].transform.SetParent(effectCloneParent, true);
         }
     }
 
-    void DoCollectingEffect()
+    IEnumerator DoCollectingEffect()
     {
+        foreach (EffectObject obj in effectObjects)
+        {
+            if(obj!= null)
+            {
+                if(!obj.isOn)
+                {
+                    obj.transform.DOMove(Vector3.up*6f, 1f).SetEase(Ease.InOutBounce);
+                    obj.transform.DOMove(effectCloneParent.transform.position, 1f).SetEase(Ease.InOutBounce).OnComplete(() =>
+                    {
+                        obj.isOn = true;
+                    });
+                }
+            }
 
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 
     public void MoveTruckUp()
     {
         if (truckPoint.AdjacentForward != null)
         {
+            //Coroutine internalEffectCoroutine = StartCoroutine(DoCollectingEffect());
+
             canProcessInput = false;
 
             // Calculate the direction from the current object position to the target in world space.
@@ -82,6 +106,7 @@ public class TruckController : MonoBehaviour
             transform.DOMove(truckPoint.AdjacentForward.position, moveSpeed).OnComplete(() =>
             {
                 canProcessInput = true;
+                //StopCoroutine(internalEffectCoroutine);
             });
             
             truckPoint = truckPoint.AdjacentForward.transform.GetComponent<TruckMovePoints>();
@@ -93,6 +118,8 @@ public class TruckController : MonoBehaviour
 
         if (truckPoint.AdjacentBackward != null)
         {
+            //Coroutine internalEffectCoroutine = StartCoroutine(DoCollectingEffect());
+
             canProcessInput = false;
 
             // Calculate the direction from the current object position to the target in world space.
@@ -112,6 +139,7 @@ public class TruckController : MonoBehaviour
             transform.DOMove(truckPoint.AdjacentBackward.position, moveSpeed).OnComplete(() =>
             {
                 canProcessInput = true;
+                //StopCoroutine(internalEffectCoroutine);
             });
             
             truckPoint = truckPoint.AdjacentBackward.transform.GetComponent<TruckMovePoints>();
@@ -122,6 +150,8 @@ public class TruckController : MonoBehaviour
     {
         if (truckPoint.AdjacentLeft != null)
         {
+            //Coroutine internalEffectCoroutine = StartCoroutine(DoCollectingEffect());
+
             canProcessInput = false;
 
             // Calculate the direction from the current object position to the target in world space.
@@ -141,6 +171,7 @@ public class TruckController : MonoBehaviour
             transform.DOMove(truckPoint.AdjacentLeft.position , moveSpeed).OnComplete(() =>
             {
                 canProcessInput = true;
+                //StopCoroutine(internalEffectCoroutine);
             });
             
             truckPoint = truckPoint.AdjacentLeft.transform.GetComponent<TruckMovePoints>();
@@ -151,6 +182,8 @@ public class TruckController : MonoBehaviour
     {
         if (truckPoint.AdjacentRight != null)
         {
+            //Coroutine internalEffectCoroutine = StartCoroutine(DoCollectingEffect());
+
             canProcessInput = false;
 
             // Calculate the direction from the current object position to the target in world space.
@@ -170,7 +203,8 @@ public class TruckController : MonoBehaviour
             transform.DOMove(truckPoint.AdjacentRight.position, moveSpeed).OnComplete(() =>
             {
                 canProcessInput = true;
-                
+                //StopCoroutine(internalEffectCoroutine);
+
             });
             
             truckPoint = truckPoint.AdjacentRight.transform.GetComponent<TruckMovePoints>();

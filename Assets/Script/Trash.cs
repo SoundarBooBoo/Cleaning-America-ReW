@@ -19,11 +19,13 @@ public class Trash : MonoBehaviour
 
     public void CollectTrash(Transform Parent)
     {
-        transform.DOMoveY(2f, 0.1f).SetEase(Ease.InBounce);
-        transform.DOMove(Parent.position, 0.1f).SetEase(Ease.InBounce).OnComplete(()=> {
+        transform.DOMoveY(2f, 0.2f).SetEase(Ease.InBounce);
+        transform.DOMove(Parent.position, 0.2f).SetEase(Ease.InBounce).OnComplete(()=> {
             transform.localPosition = Vector3.zero;
         });
         transform.SetParent(Parent);
-        transform.DOScale(new Vector3(0.25f, 0.25f, 0.25f), 0.2f);
+        transform.DOScale(new Vector3(0.002f, 0.002f, 0.002f), 0.5f);
+        
+        
     }
 }
