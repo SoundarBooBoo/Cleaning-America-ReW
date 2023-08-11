@@ -13,6 +13,8 @@ public class TruckController : MonoBehaviour
 
     public Vector3 targetDirection;
 
+    public ParticleSystem smokeEffect;
+
     [SerializeField]
     Transform FillObjectT;
 
@@ -88,6 +90,8 @@ public class TruckController : MonoBehaviour
 
             canProcessInput = false;
 
+            smokeEffect.Play();
+
             // Calculate the direction from the current object position to the target in world space.
             Vector3 targetDir = (truckPoint.AdjacentForward.transform.position - transform.position).normalized;
 
@@ -106,6 +110,7 @@ public class TruckController : MonoBehaviour
             transform.DOMove(truckPoint.AdjacentForward.position, moveSpeed).OnComplete(() =>
             {
                 canProcessInput = true;
+                smokeEffect.Stop();
                 //StopCoroutine(internalEffectCoroutine);
             });
             
@@ -121,6 +126,8 @@ public class TruckController : MonoBehaviour
             //Coroutine internalEffectCoroutine = StartCoroutine(DoCollectingEffect());
 
             canProcessInput = false;
+
+            smokeEffect.Play();
 
             // Calculate the direction from the current object position to the target in world space.
             Vector3 targetDir = (truckPoint.AdjacentBackward.transform.position - transform.position).normalized;
@@ -139,6 +146,7 @@ public class TruckController : MonoBehaviour
             transform.DOMove(truckPoint.AdjacentBackward.position, moveSpeed).OnComplete(() =>
             {
                 canProcessInput = true;
+                smokeEffect.Stop();
                 //StopCoroutine(internalEffectCoroutine);
             });
             
@@ -153,6 +161,8 @@ public class TruckController : MonoBehaviour
             //Coroutine internalEffectCoroutine = StartCoroutine(DoCollectingEffect());
 
             canProcessInput = false;
+
+            smokeEffect.Play();
 
             // Calculate the direction from the current object position to the target in world space.
             Vector3 targetDir = (truckPoint.AdjacentLeft.transform.position - transform.position).normalized;
@@ -171,6 +181,7 @@ public class TruckController : MonoBehaviour
             transform.DOMove(truckPoint.AdjacentLeft.position , moveSpeed).OnComplete(() =>
             {
                 canProcessInput = true;
+                smokeEffect.Stop();
                 //StopCoroutine(internalEffectCoroutine);
             });
             
@@ -185,6 +196,7 @@ public class TruckController : MonoBehaviour
             //Coroutine internalEffectCoroutine = StartCoroutine(DoCollectingEffect());
 
             canProcessInput = false;
+            smokeEffect.Play();
 
             // Calculate the direction from the current object position to the target in world space.
             Vector3 targetDir = (truckPoint.AdjacentRight.transform.position - transform.position).normalized;
@@ -203,6 +215,7 @@ public class TruckController : MonoBehaviour
             transform.DOMove(truckPoint.AdjacentRight.position, moveSpeed).OnComplete(() =>
             {
                 canProcessInput = true;
+                smokeEffect.Stop();
                 //StopCoroutine(internalEffectCoroutine);
 
             });

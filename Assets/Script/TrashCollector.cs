@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +11,9 @@ public class TrashCollector : MonoBehaviour
     public Transform TrashHolder;
     //public GameObject Dumpholder;
     public Transform trashParentInScene;
+
+    [SerializeField]
+    TextMeshProUGUI levelProgressTextTM;
 
     private int totalTrashCount;
     private int collectedTrashCount;
@@ -33,9 +38,11 @@ public class TrashCollector : MonoBehaviour
             percntg = (float)collectedTrashCount / totalTrashCount;
 
             levelProgressSlider.value = percntg;
+            levelProgressTextTM.text = (Mathf.Clamp(percntg,0,1) * 100f).ToString(format: "00.00") + "%";
             if (percntg == 0.98f)
             {
                 Debug.Log("Almost collected");
+
             }
         }
     }
