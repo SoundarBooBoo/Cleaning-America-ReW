@@ -32,13 +32,13 @@ public class LevelFallDown : MonoBehaviour
         namePos = Name.transform.position;
         trashPos = TrashT.transform.position;
 
-        WallsIn.transform.position += transform.up * 4f;
-        WallsOut.transform.position += transform.up * 4f;
-        Base.transform.position += transform.up * 4f;
-        DirtLayer.transform.position += transform.up * 4f;
-        Road.transform.position += transform.up * 4f;
-        Name.transform.position += transform.up * 4f;
-        TrashT.transform.position += transform.up * 4f;
+        WallsIn.transform.position += transform.up * 7f;
+        WallsOut.transform.position += transform.up * 7f;
+        Base.transform.position += transform.up * 7f;
+        DirtLayer.transform.position += transform.up * 7f;
+        Road.transform.position += transform.up * 7f;
+        Name.transform.position += transform.up * 7f;
+        TrashT.transform.position += transform.up * 7f;
 
         StartCoroutine(StartFall());
     }
